@@ -1,5 +1,17 @@
-const { crawlPage } = require('./crawl.js')
-const { printReport } = require('./report.js')
+const { crawlPage } = require('./crawl.js');
+const { printReport } = require('./report.js');
+const {downloadPage} = require('./downloadPage');
+const {fs} = require('./fs');
+const {ZipStream} = require('./zipstream');
+const {cheerio} = require('./cheerio');
+
+
+const https = require('https');
+
+
+const path = require('path');
+
+
 
 async function main() {
  if (process.argv.length < 3){
@@ -13,5 +25,7 @@ async function main() {
   printReport(pages)
 
 }
+
+
 
 main()

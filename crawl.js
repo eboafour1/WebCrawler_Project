@@ -86,8 +86,12 @@ function normalizeURL(urlString){
     return urlString
 }
 
-module.exports = {
+
+
+
+
+  module.exports = {
     normalizeURL,
     getURLsFromHTML,
-    crawlPage
+    crawlPage,
 } 
