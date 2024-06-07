@@ -1,34 +1,43 @@
 const { crawlPage } = require('./crawl.js');
 const { printReport } = require('./report.js');
-const {downloadPage} = require('./downloadPage');
-const {creatDirectory} = require('./destinationFolder');
+const {createDirectory} = require('./destinationFolder');
 const fs = require('fs');
-const ZipStream = require('zip-stream');
-const cheerio = require('cheerio');
+const JSZip = require('jszip');
+
+const OUTPUT_DIR = './output';
 
 
-
-const https = require('https');
-
-
-const path = require('path');
-
-
-
+// Main function to start the crawling process
 async function main() {
-  creatDirectory()
- if (process.argv.length < 3){
-    console.log("no website provided")
-    process.exit(1)
+  createDirectory(); // Ensure the directory is created
+
+  if (process.argv.length < 3) {
+      console.log("No website provided");
+      process.exit(1);
   }
 
-  const baseURL = process.argv[2]
-  console.log("starting crawl")
-  const pages = await crawlPage(baseURL, baseURL, {})
+  const baseURL = process.argv[2];
+  console.log("Starting crawl");
 
-  printReport(pages)
+  // Create a new zip instance if you want to use zip functionality
+  const zip = new JSZip();
 
+  // Start the crawl
+  const pages = await crawlPage(baseURL, baseURL, {}, zip);
+
+  // Save the zip file if needed
+  if (Object.keys(pages).length > 0) {
+      zip.generateAsync({ type: 'nodebuffer' })
+          .then((content) => {
+              fs.writeFileSync(`${OUTPUT_DIR}/archive.zip`, content);
+              console.log('Zip file saved.');
+          });
+  }
+
+  // Optionally, print the report
+  printReport(pages); // Uncomment and define this function if needed
 }
+
 
 
 
