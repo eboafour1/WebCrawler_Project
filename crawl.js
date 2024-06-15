@@ -98,6 +98,9 @@ async function getURLsFromHTML(htmlBody, baseURL) {
            
 
 function normalizeURL(urlString){
+    if(!urlString.includes('https') || !urlString.includes('http') ){
+        return `https://${urlString}`
+    }
     return urlString
 }
 
