@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 // create the destination folder if it doesn't exist
-const OUTPUT_DIR = path.join(__dirname,'output')
+const OUTPUT_DIR = path.join(__dirname,'Page_Craled_files')
 //const OUTPUT_DIR = './output';
 
 
